@@ -1,24 +1,24 @@
 # Module Project: Forms - Team Builder
 
-This project allows you to practice the concepts and techniques learned in this module and apply them in a concrete project. This module explored Form management in React. You learned about controled inputs, semantic HTML, some ES6 tools like the spread operator and computed properties, and synthetic events. In your project you will demonstrate proficiency of these subjects and principles by creating an application using each of these.
+This project allows you to practice the concepts and techniques learned in this module and apply them in a concrete project. This module explored Form management in React. You learned about controlled inputs, semantic HTML, some ES6 tools like the spread operator and computed properties, and synthetic events. In your project you will demonstrate proficiency of these subjects and principles by creating an application using each of these.
 
 ## Introduction
 
-In this project you'll build an app that will keep track of memebers of a team. You'll be able to add members to this team as well as edit their details.
+In this project you'll build an app that will keep track of members of a team. You'll be able to add members to this team as well as edit their details.
 
 ## Instructions
 
 ### Task 1: Project Set Up
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your team lead as collaborator on Github.
-- [ ] Clone your OWN version of the repository in your terminal
-- [ ] Use `npx create-react-app team-builder --use-npm` or `create-react-app team-builder` to initiate the project.
-- [ ] CD into your `team-builder` directory
-- [ ] Start up the app using `npm start`
-- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
-- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
-- [ ] Push commits: git push origin `<firstName-lastName>`.
+- [x] Create a forked copy of this project.
+- [x] Add your team lead as collaborator on Github.
+- [x] Clone your OWN version of the repository in your terminal
+- [x] Use `npx create-react-app team-builder --use-npm` or `create-react-app team-builder` to initiate the project.
+- [x] CD into your `team-builder` directory
+- [x] Start up the app using `npm start`
+- [x] Create a new branch: git checkout -b `<firstName-lastName>`.
+- [x] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
+- [x] Push commits: git push origin `<firstName-lastName>`.
 
 ### Task 2a: Minimum Viable Product
 
@@ -91,3 +91,138 @@ After finishing your required elements, you can push your work further. These go
 
 - [ ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into `main` (student's  Repo). **Please don't merge your own pull request**
 - [ ] Fill out your module retrospective form [here](https://forms.lambdaschool.com/module-retrospective) with a link to your PR
+
+Third Times the Charm
+
+FORM MANAGEMENT - EMILY SEIBERT: https://www.youtube.com/watch?v=4SNexRhmA6g&feature=youtu.be
+
+Code Sandbox: https://codesandbox.io/s/form-management-8620-8gv6j
+
+
+-----SETTING UP THE FORM---------
+***Step 1*** {/* Step 1: Create a basic <form> with <input> type=text inside to set up HTML form */}
+  1. Create "input": 
+    /* <input id="title" type="text" placeholder="Enter title" /> */
+  
+  ***Step 2*** {/* Step 2: Add <label> with htmlFor & update <input> id to create relationship b/t input and label*/}
+    1. Create "label": 
+      /* <label htmlFor="title">Title</label> */
+      
+-----SETTING UP STATE AND THE HANDLER TO CHANGE IT-----
+***Step 3*** // Step 3: Set up state for FORM stored in note object. Note this is separate from index.js 'notes' // ALWAYS KEEP YOUR INPUT VALUES IN SYNC WITH FORM STATE.
+  1. Create "state":
+    /* const [note, setNote] = useState({ title: props.title}); */
+
+***Step 4***  // Step 4: Set up onChange event when input text changes (similar to our onClick event used with buttons) (https://reactjs.org/docs/events.html#form-events)
+  1. Add onChange Event with handler input:
+    /* <input id="title" type="text" placeholder="Enter title" onChange={handleChanges} /> */
+  2. Set up handler: 
+    /* const handleChanges = (event) => {
+        console.log('handled change!', event.target.value)
+      } */
+  3. ***Step 5*** // Step 5: Use text input value to update state
+    1. Use input to update state:
+        /* const handleChanges = (event) => {
+            console.log('handled change!', event.target.value) */
+            setNote({title: event.target.value}) /*
+          } */
+
+-----USING THE HANDLER YOU CREATED TO CREATE MULTIPLE NOTES (IN A NEW FUNCTION) AND PASSING THAT TO BE USED BY A BUTTON SOMEWHERE ELSE IN THE APP-----
+***Step 6*** // Step 6: Create function that will update 'notes' with param values passed
+  1. (V.1):
+    // const newNote = {
+    //   title: noteObjParam.title,
+    //   body: noteObjParam.body,
+    //   id: Date.now() // unique integer generator 
+    // }
+    // setNotes([...notes, newNote])
+  2. (V.2):
+    ...
+  3. (V.3):
+    // const addNewNote = (note) => {
+          setNotes([...notes, {...note, id: Date.now() }])
+    // };
+  ***Step 7*** {/* Step 7: Pass addNewNote as a prop into NoteForm */}
+    1. Pass new fxn:
+      // <NoteForm addNewNote={addNewNote} title="Default title" />
+***Step 8***  // Step 8: Create submit form function with addNewNote prop
+  1. Add submitForm to Form: 
+    // <form onSubmit={submitForm}>
+  2. Submit form function:
+    // const submitForm = (event) => {
+    //   event.preventDefault(); // prevent default <form> submit behavior
+    //   props.addNewNote(note); // pull addNewNotes from props, pass NoteForm state and add to App state with array spread
+    // };
+  3. ***Step 9*** {/* Step 9: Submit form with button and onSubmit */}
+      1. Submit Form button:
+        // <button type="submit">Add Note</button>
+***Step 10*** {/* Step 10: Setting Value with State in <input>*/}
+  1. Change value to state:
+  //    <input
+  //       id="title"
+  //       type="text"
+  //       placeholder="Enter title"
+  //       name="title"
+           value={note.title}
+  //       onChange={handleChanges}
+  //     />
+-----Secondary input functionality and clean up -----
+***Step 11*** {/* Step 11: Add note <textarea> and update note state and  */}
+  1. Add new note section:
+    // <label htmlFor="body">Note</label>
+    //   <textarea
+    //     id="body"
+    //     placeholder="Add your note here"
+    //     name="body"
+    //     onChange={handleChanges}
+    //     value={note.body}
+    //   />
+  2. Update state to update "body":
+    /* const [note, setNote] = useState({ title: props.title, body: "" }); */
+  3. ***Step 12*** // Step 12: Refactor inputs and handleChanges to use "name" in updating state
+    1. Change handler to change "event.target.value" for "body" as well:
+          // event --> Synthetic Event from React
+          // event.target --> DOM element that fired event
+          // event.target.name --> name attribute value on element that fired event
+          // event.target.value --> value of element that fired event.
+      
+          // computed properties... instead of using a string as the key, calculate
+          // the key inside of [event.target.name] and then set that key to the value.
+      
+          // object spread...incorporate the entire object, and then overwrite key/value pair with computed properties.
+          const newStateObj = { ...note, [event.target.name]: event.target.value };
+          setNote(newStateObj);
+        };
+***Step 13*** // Step 13: Clear form onSubmit
+  1.  Clear form:
+      // const submitForm = (event) => {
+      //   event.preventDefault(); // prevent default <form> submit behavior
+      //   props.addNewNote(note); // pull addNewNotes from props, pass NoteForm state and add to App state with array spread
+           setNote({ title: "", body: "" }); // reset form after adding to app state.
+      // };
+      
+      
+      
+-----Harry Potter example 2----- Sandbox link: https://codesandbox.io/s/search-form-8620-x828s
+
+- Create form
+  - label
+  - input
+- Create state (for search (from form))
+- Update props for input
+  - onChange = {handleChange}
+  - value = {state}
+- Change handler to set state to even.target.value
+- Save some value inside of the application
+  - {characters.map(character => <li key={character}>{character}</li>)
+- Filter characters
+  - Define a new state based on search term
+    -(because you have data that will be changing dynamically)
+    - const [searchResult, setSearchResults] = useState(characters); //
+    - search results replaces characters in the previous map statement
+- Listen for when search term changes
+  - triggers state change (useEffect needed) (Dependency array based on state (searchbox) changing)
+  - create "results" variable that is set to filter characters and return 
+    - character that includes searchterm
+      - character.toLowerCase().includes(searchTerm.toLowerCase())}
+  
