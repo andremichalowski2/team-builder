@@ -4,7 +4,7 @@
   ## 2. Import data, convert to state, .map state to create initial members
   ## 3. Create form for name, email, and role (use form, label, and input)
 
-  - [ ] Render a list of team members from state.
+  - [x] Render a list of team members from state.
   - [ ] Build a form to add a new member to the list of members.
 
 2. #### Setup your state
